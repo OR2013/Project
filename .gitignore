@@ -2,3 +2,7 @@
 #####################
 *.xml
 *.sumocfg
+
+# Python bytecode files #
+#########################
+*.pyc
