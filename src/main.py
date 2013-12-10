@@ -79,6 +79,10 @@ if __name__ == '__main__':
     options = get_options()
 
     options.prefix = '../config/' + options.prefix
+    try:
+        os.mkdir('../config')
+    except OSError:
+        pass
 
     # this script has been called from the command line. It will start sumo as a
     # server, then connect and run

@@ -5,7 +5,7 @@ import re
 from collections import defaultdict
 from heapq import *
 
-INFINITY = 1000000
+INFINITY = 1000000000
 
 try:
     os.environ["SUMO_HOME"] = "/usr/share/sumo"
@@ -37,43 +37,6 @@ def read_connections(netfile):
     	for match in iterator:
     		connections[match.group(1)].append(match.group(2))
 	return connections
-
-def reverse_edge(edge):
-	return str(-int(edge))
-
-def furthest_edge(source, edges, connections, visited):
-	dist = {}
-	for edge in edges:
-		dist[edge] = 0
-
-	stack = [source]
-	visited.add(source)
-	while len(stack) > 0:
-		edge = stack.pop()
-		for neighbour in connections[edge]:
-			if dist[neighbour] == 0:
-				dist[neighbour] = dist[edge] + 1
-				dist[reverse_edge(neighbour)] = dist[edge] + 1
-				stack.append(neighbour)
-				visited.add(neighbour)
-
-	destination = max(dist, key=dist.get)
-	return (destination, dist[destination], visited)
-
-def get_distance(edges, connections):
-	visited = set()
-	distance = 0
-	for edge in edges:
-		if edge not in visited:
-			s, _, visited = furthest_edge(edge, edges, connections, visited)
-			d, dist, _ = furthest_edge(reverse_edge(s), edges, connections, set())
-			print 'edge: {0}, source: {1}, dest: {2}, dist: {3}'.format(edge, s, d, dist)
-			print 'visited: {0}'.format(visited)
-			if dist > distance:
-				source = s
-				destination = d
-				distance = dist
-	return (source, destination)
 
 def dijkstra(source, destination, edges, costs, connections):
 	heap = []
