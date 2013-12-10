@@ -1,0 +1,4 @@
+# Sumo config files #
+#####################
+*.xml
+*.sumocfg
